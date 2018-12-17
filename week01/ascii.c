@@ -4,6 +4,7 @@
 int main(void)
 {
   char s[100];
+  printf("Enter some text: ");
   fgets(s,sizeof(s),stdin);
   printf("%i\n",(int) strlen(s));
   for(int i=0, n = strlen(s); i < n; i++){

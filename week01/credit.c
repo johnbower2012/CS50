@@ -27,7 +27,7 @@ void readInt(unsigned long long int *integer){
       while(isspace((unsigned char) *endptr)) endptr++;
       if( *endptr != '\0' ) continue;
       loop=0;
-    } 
+    }
   while(loop);
   *integer = (unsigned long long int) card_number;
 }
