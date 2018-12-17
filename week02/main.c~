@@ -25,12 +25,12 @@ int main(int argc, char* argv[]){
 
 
   randomize(array,length,scale,mod);
-  //printInt(array,length);
+  printInt(array,length);
   start = clock();
   quickSort(array,0,length-1);
   end = clock();
   printf("QuickSort: %fs\n", (double)(end-start)/(double)CLOCKS_PER_SEC);
-  //printInt(array,length);
+  printInt(array,length);
 
   randomize(array,length,scale,mod);
   //printInt(array,length);
