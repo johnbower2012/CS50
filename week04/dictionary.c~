@@ -3,56 +3,45 @@
 /********* DICTIONARY *********/
 void createDictionary(dictionary **dict, char *entry, int keys)
 {
-  int lettercount;
-  lettercount=0;
-  //If dictionary points to nothing, create root
-  if( !(*dict) )
+  int len = strlen(entry)+1;
+  int let, lc=0;
+  dictionary *ptr = *dict;
+
+  if( !ptr )
     {
-      dictionary *new = malloc(sizeof(dictionary));
-      new->word = NULL;
-      new->letter = malloc(keys*sizeof(dictionary));
+      ptr = (dictionary*)malloc(sizeof(dictionary));
+      ptr->word = NULL;
+      ptr->letter = (dictionary**)malloc(keys*sizeof(dictionary*));
       for(int i=0;i<keys;i++)
 	{
-	  new->letter[i] = NULL;
+	  ptr->letter[i] = NULL;
 	}
-      *dict = new;
+      *dict = ptr;
     }
-
-  //loop through, creating new entries for new pathways
-  for( dictionary* ptr = *dict; ptr != NULL; )
+  while( entry[lc] != '\0' )
     {
-  printf("pass\n");
-      int let = (int) (entry[lettercount] - 'A');
-      if( ptr->letter[let] != NULL )
+      int let = ((int) (toupper(entry[lc]) - 'A') + 26)%26;
+      if( !ptr->letter[let] )
 	{
+	  ptr->letter[let] = (dictionary*)malloc(sizeof(dictionary));
 	  ptr = ptr->letter[let];
+	  ptr->word = NULL;
+	  ptr->letter = (dictionary**)malloc(keys*sizeof(dictionary*));
+	  for(int i=0;i<keys;i++)
+	    {
+	      ptr->letter[i] = NULL;
+	    }
 	}
       else
 	{
-	  dictionary *new = malloc(sizeof(dictionary));
-	  new->word = NULL;
-	  new->letter = (dictionary **)malloc(keys*sizeof(dictionary*));
-	  for(int i=0;i<keys;i++)
-	    {
-	      new->letter[i] = NULL;
-	    }
-	  
-	  ptr->letter[let] = new;
-	  ptr = new;
+	  ptr = ptr->letter[let];	      
 	}
-
-      lettercount++;
-      if(entry[lettercount] == '\0')
-	{
-	  int size = lettercount+1;
-	  ptr->word = malloc(size*sizeof(char));
-	  for(int i=0;i<size;i++)
-	    {
-	      ptr->word[i] = entry[i];
-	    }
-	  printf("%s\n",ptr->word);
-	  break;
-	}
+      lc++;
+    }
+  ptr->word = (char *)malloc(len*sizeof(char));
+  for(int i=0;i<len;i++)
+    {
+      ptr->word[i] = entry[i];
     }
 }
 bool searchDictionary(dictionary **dict, char *entry)
@@ -104,6 +93,10 @@ void deleteDictionary(dictionary **cover, int keys)
   dictionary *ptr = *cover;
   if( ptr != NULL )
     {
+      if(!ptr->word)
+	{
+	  free(ptr->word);
+	}
       for(int i=0; i<keys;i++)
 	{
 	  deleteDictionary(&ptr->letter[i],keys);
