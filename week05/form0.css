@@ -1,0 +1,18 @@
+body
+{
+    text-align: center
+}
+
+#db
+{
+    border: 4px dotted yellow
+}
+
+.bgcolor
+{
+    background-color: black
+}
+.fgcolor
+{
+    color: white
+}

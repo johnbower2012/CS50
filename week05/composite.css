@@ -1,0 +1,19 @@
+body
+{
+    text-align: center;
+}
+
+header
+{
+    text-align: center; font-size: large;
+}
+
+main
+{
+    text-align: left; font-size: medium;
+}
+
+footer
+{
+    text-align: right; font-size: small;
+}

@@ -9,5 +9,6 @@ int main(void)
   printTreeLtoG(&root);
   createTree(&root);
   printTreeLtoG(&root);
+  printTree(&root);
   deleteTree(&root);
 }
